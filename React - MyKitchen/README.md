@@ -1,2 +1,2 @@
-��# My first React app.
+My first React app.
 using state, props, uplifting.
