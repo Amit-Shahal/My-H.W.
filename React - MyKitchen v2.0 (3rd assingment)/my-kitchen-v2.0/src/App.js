@@ -1,10 +1,10 @@
 import './App.css';
-import Main from './FC/FCMain.jsx';
+import FCMain from './FC/FCMain.jsx';
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <FCMain />
     </div>
   );
 }

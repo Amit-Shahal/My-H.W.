@@ -3,23 +3,23 @@ import React from 'react'
 
 export default function FCNewRecipe(props) {
     
-    let ingredientsCheckBoxs = props.ingredients.map(ing => (
+    // let ingredientsCheckBoxs = props.ingredients.map(ing => (
         
-       <p>{ing.name}</p> 
-    ));
-    let list = props.recipes.map((rec,index) => (
-        <Grid item xs={12} sm={6} md={4} key={index} align="center" >
-          <FCRecipe 
-          recipe={rec}
-           sendData2Parent={getDataFromChild} 
-           header={props.header}
-            />
-        </Grid>
-    ));
+    //    <p>{ing.name}</p> 
+    // ));
+    // let list = props.ingredients.map((rec,index) => (
+    //     <Grid item xs={12} sm={6} md={4} key={index} align="center" >
+    //       <FCRecipe 
+    //       recipe={rec}
+    //        sendData2Parent={getDataFromChild} 
+    //        header={props.header}
+    //         />
+    //     </Grid>
+    // ));
     return (
         <div>
             <h1>Create new Recipe</h1>
-            <Grid
+            {/* <Grid
                 container
                 direction="column"
                 justify="center"
@@ -32,7 +32,7 @@ export default function FCNewRecipe(props) {
                 <TextField onChange={handleChangeCalories} label="Time" variant="outlined" size="small" style={{ marginTop: "10px" }} />
                 <TextField onChange={handleChangeImageUrl} label="Image (url)" variant="outlined" size="small" style={{ marginTop: "10px" }} />
                 {ingredientsCheckBoxs}
-            </Grid>
+            </Grid> */}
 
         </div>
     )

@@ -1,20 +1,22 @@
-import React , {useState} from "react";
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, useHistory, Link } from "react-router-dom";
 import FCNewIngredient from "./FCNewIngredient";
 import FCNewRecipe from "./FCNewRecipe";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import FCMyKitchen from "./FCMyKitchen";
 
-export default function Main() {
+export default function FCMain(props) {
 
+  let history = useHistory();
   const [value, setValue] = useState(0);
   const [component, setComponent] = useState(<h2>Home</h2>);
   const [name, setName] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
   const [calories, setCalories] = React.useState("");
 
-  const getDataFromChild = (name,imageUrl,calories) => {
+  const getDataFromChild = (name, imageUrl, calories) => {
     setName(name);
     setImageUrl(imageUrl);
     setCalories(calories);
@@ -24,21 +26,23 @@ export default function Main() {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        setComponent(<h1>Home</h1>);
+        // setComponent(<FCMyKitchen />);
+        // use push history some how to push path router
+        // history.push("/"); 
         break;
       case 1:
-        setComponent(<FCNewIngredient sendData2Parent={getDataFromChild}/>);
+        setComponent(<FCNewIngredient sendData2Parent={getDataFromChild} />);
         break;
       case 2:
-        setComponent(<FCNewRecipe/>);
+        setComponent(<FCNewRecipe />);
         break;
     }
   };
 
   return (
-    // <Router>
+    <Router>
       <div>
-        
+
         <Paper>
           <Tabs
             value={value}
@@ -57,32 +61,27 @@ export default function Main() {
 
         {component}
         {name}
-        <br/>
+        <br />
         {imageUrl}
-        <br/>
+        <br />
         {calories}
 
 
-{/* יכולתי להשתמש בראוט אבל זה יותר גניב :) */}
-{/* 
-        <NavLink to="/" activeStyle={{ fontWeight: "bold", color: "red" }}>
-          My Kitchen
-          </NavLink>
-        <NavLink to="/newIngredient">Create new ingredient </NavLink>
-        <NavLink to="/newRecipe">Create new recipe </NavLink>
+
+        {/* 
+        <Link to="/" >
+          
+        </Link>
+        <Link to="/newIngredient">Create new ingredient </Link>
+        <Link to="/newRecipe">Create new recipe </Link> */}
 
         <Switch>
-          <Route path="/newIngredient">
-            <FCNewIngredient />
-          </Route>
-          <Route path="/newRecipe">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch> */}
+          <Route path="/newIngredient" component={FCNewIngredient} ></Route>
+          <Route path="/newRecipe" component={FCNewRecipe}></Route>
+          <Route path="/" component={FCMyKitchen}></Route>
+        </Switch>
       </div>
-    // </Router>
+    </Router>
   );
 }
+
