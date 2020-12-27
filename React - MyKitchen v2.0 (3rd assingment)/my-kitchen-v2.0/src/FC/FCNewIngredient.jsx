@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState  } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { Button, TextField, Snackbar } from '@material-ui/core';
 
@@ -30,16 +30,17 @@ export default function FCNewIngredient(props) {
   const [imageUrl, setImageUrl] = useState("");
   const [calories, setCalories] = useState("");
 
+   
   const handleCreateNewIngredient = () => {
     //turn on Snackbar alert
     setOpen(true);
 
     //uplifte
-    props.sendData2Parent(name,imageUrl,calories);
+    props.sendData2Parent(name, imageUrl, calories);
   };
 
   const handleClearForm = () => {
-    
+
     //clear value of textfileds
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
@@ -61,7 +62,7 @@ export default function FCNewIngredient(props) {
 
   const handleChangeName = (e) => {
     setName(e.target.value);
-    
+
   };
   const handleChangeImageUrl = (e) => {
     setImageUrl(e.target.value);
@@ -69,6 +70,16 @@ export default function FCNewIngredient(props) {
 
   const handleChangeCalories = (e) => {
     setCalories(e.target.value);
+  };
+  const styleBtnContainerontainer = {
+    paddingLeft: "10%", marginTop: "10px", paddingRight: "10%"
+  };
+
+  const styleTextField = {
+    marginTop: "10px"
+  };
+  const styleTextFieldContainer = {
+    paddingLeft: "10%", paddingRight: "10%"
   };
 
   return (
@@ -79,15 +90,21 @@ export default function FCNewIngredient(props) {
         direction="column"
         justify="center"
         alignItems="stretch"
-        style={{ paddingLeft: "10%", paddingRight: "10%" }}
+        style={styleTextFieldContainer}
       >
-        <TextField onChange={handleChangeName} label="Name" variant="outlined" size="small" />
-        <TextField onChange={handleChangeImageUrl}  label="Image (url)" variant="outlined" size="small" style={{  marginTop: "10px" }} />
-        <TextField onChange={handleChangeCalories}  label="Calories" variant="outlined" size="small" style={{  marginTop: "10px" }}  />
+        <TextField onChange={handleChangeName}
+          label="Name" variant="outlined" size="small" style={styleTextField} />
+
+        <TextField onChange={handleChangeImageUrl}
+          label="Image (url)" variant="outlined" size="small" style={styleTextField} />
+
+        <TextField onChange={handleChangeCalories}
+          label="Calories" variant="outlined" size="small" style={styleTextField} />
+
       </Grid>
 
       <Grid container
-        style={{ paddingLeft: "10%", marginTop: "10px", paddingRight: "10%" }}
+        style={styleBtnContainerontainer}
       >
         <Grid item xs={12} sm={6}>
           <Button

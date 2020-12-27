@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route, useHistory, Link } from "react-router-dom";
+import React, { useState , useEffect} from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
 import FCNewIngredient from "./FCNewIngredient";
 import FCNewRecipe from "./FCNewRecipe";
 import Paper from '@material-ui/core/Paper';
@@ -7,14 +7,18 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import FCMyKitchen from "./FCMyKitchen";
 
-export default function FCMain(props) {
+export default function FCMain() {
 
-  let history = useHistory();
+  const history = useHistory();
   const [value, setValue] = useState(0);
-  const [component, setComponent] = useState(<h2>Home</h2>);
+
   const [name, setName] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
   const [calories, setCalories] = React.useState("");
+
+  useEffect(() => {
+   history.push("/");
+  }, []);
 
   const getDataFromChild = (name, imageUrl, calories) => {
     setName(name);
@@ -26,62 +30,45 @@ export default function FCMain(props) {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        // setComponent(<FCMyKitchen />);
-        // use push history some how to push path router
-        // history.push("/"); 
+
+        // use push history to push path router
+        history.push("/");
         break;
       case 1:
-        setComponent(<FCNewIngredient sendData2Parent={getDataFromChild} />);
+        history.push("/newIngredient");
         break;
       case 2:
-        setComponent(<FCNewRecipe />);
+        history.push("/newRecipe");
         break;
     }
   };
 
   return (
-    <Router>
-      <div>
+    <div>
 
-        <Paper>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
+      <Paper>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="My Kitchen"/>
+          <Tab label="Create new ingredient" />
+          <Tab label="Create new recipe" />
+        </Tabs>
+      </Paper>
+       
+       
+      <Switch>
+        <Route path="/" exact ><FCMyKitchen /></Route>
+        <Route path="/newIngredient" exact><FCNewIngredient sendData2Parent={getDataFromChild} /></Route>
+        <Route path="/newRecipe"exact ><FCNewRecipe /></Route>
+      </Switch>
 
-            <Tab label="My Kitchen" />
-            <Tab label="Create new ingredient" />
-            <Tab label="Create new recipe" />
-
-          </Tabs>
-        </Paper>
-
-        {component}
-        {name}
-        <br />
-        {imageUrl}
-        <br />
-        {calories}
-
-
-
-        {/* 
-        <Link to="/" >
-          
-        </Link>
-        <Link to="/newIngredient">Create new ingredient </Link>
-        <Link to="/newRecipe">Create new recipe </Link> */}
-
-        <Switch>
-          <Route path="/newIngredient" component={FCNewIngredient} ></Route>
-          <Route path="/newRecipe" component={FCNewRecipe}></Route>
-          <Route path="/" component={FCMyKitchen}></Route>
-        </Switch>
-      </div>
-    </Router>
+      {name}{imageUrl}{calories}
+    </div>
   );
 }
 
