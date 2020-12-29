@@ -48,7 +48,7 @@ export default function FCNewIngredient(props) {
     setName("");
     setImageUrl("");
     setCalories("");
-    //turn on Snackbar alert
+    //turns on Snackbar alert
     setCFOpen(true);
   };
 
@@ -127,7 +127,7 @@ export default function FCNewIngredient(props) {
 
       <Snackbar open={open} autoHideDuration={1200} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Ingredient add successfully!
+          Ingredient added successfully!
               </Alert>
       </Snackbar>
       <Snackbar open={openCF} autoHideDuration={1200} onClose={handleClose}>

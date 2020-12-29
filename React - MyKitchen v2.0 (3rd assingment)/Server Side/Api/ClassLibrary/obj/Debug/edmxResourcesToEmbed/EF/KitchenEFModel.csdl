@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblIngredient">
+    <Key>
+      <PropertyRef Name="IngredientsID" />
+    </Key>
+    <Property Name="IngredientsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="image" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="calories" Type="Int32" />
+    <NavigationProperty Name="tblRecipes" Relationship="Self.tblIngredientsInRecipes" FromRole="tblIngredients" ToRole="tblRecipes" />
+  </EntityType>
+  <EntityType Name="tblRecipe">
+    <Key>
+      <PropertyRef Name="RecipesID" />
+    </Key>
+    <Property Name="RecipesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="image" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="cookingMethod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="time" Type="Int32" />
+    <NavigationProperty Name="tblIngredients" Relationship="Self.tblIngredientsInRecipes" FromRole="tblRecipes" ToRole="tblIngredients" />
+  </EntityType>
+  <Association Name="tblIngredientsInRecipes">
+    <End Role="tblIngredients" Type="Self.tblIngredient" Multiplicity="*" />
+    <End Role="tblRecipes" Type="Self.tblRecipe" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="KitchenDbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tblIngredients" EntityType="Self.tblIngredient" />
+    <EntitySet Name="tblRecipes" EntityType="Self.tblRecipe" />
+    <AssociationSet Name="tblIngredientsInRecipes" Association="Self.tblIngredientsInRecipes">
+      <End Role="tblIngredients" EntitySet="tblIngredients" />
+      <End Role="tblRecipes" EntitySet="tblRecipes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

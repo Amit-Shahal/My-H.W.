@@ -1,38 +1,49 @@
 import { Checkbox } from '@material-ui/core';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function FCNewRecipe(props) {
-    
-    // let ingredientsCheckBoxs = props.ingredients.map(ing => (
+    const [loading, setLoading] = useState(true);
+    const [ingredients, setIngredients] = useState(true);
+
+
+    //JSON.stringify
+    useEffect( () => {
+        const url = 'http://localhost:57403/api/values';
+        const response = fetch(url, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+
+            })
+            
+        }).then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            return res.json()
+          }).then(
+            (result) => {
+              console.log("fetch btnFetchGetStudents= ", result);
+              result.map(st => console.log(st.name));
+            },
+            (error) => {
+              console.log("err post=", error);
+            });
         
-    //    <p>{ing.name}</p> 
-    // ));
-    // let list = props.ingredients.map((rec,index) => (
-    //     <Grid item xs={12} sm={6} md={4} key={index} align="center" >
-    //       <FCRecipe 
-    //       recipe={rec}
-    //        sendData2Parent={getDataFromChild} 
-    //        header={props.header}
-    //         />
-    //     </Grid>
-    // ));
+        setLoading(false);
+        console.log(response);  
+    }, []);
+
     return (
+        
         <div>
-            <h1>Create new Recipe</h1>
-            {/* <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="stretch"
-                style={{ paddingLeft: "10%", paddingRight: "10%" }}
-            >
-                
-                <TextField onChange={handleChangeName} label="Name" variant="outlined" size="small" />
-                <TextField onChange={handleChangeCalories} label="Cooking Method" variant="outlined" size="small" style={{ marginTop: "10px" }} />
-                <TextField onChange={handleChangeCalories} label="Time" variant="outlined" size="small" style={{ marginTop: "10px" }} />
-                <TextField onChange={handleChangeImageUrl} label="Image (url)" variant="outlined" size="small" style={{ marginTop: "10px" }} />
-                {ingredientsCheckBoxs}
-            </Grid> */}
+          
+            {loading ? (
+                <h1>Loading...</h1>
+                ) : (
+                <h1>person</h1>
+            )}
 
         </div>
     )
