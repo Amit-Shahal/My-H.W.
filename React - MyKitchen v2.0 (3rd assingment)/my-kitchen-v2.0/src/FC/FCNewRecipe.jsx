@@ -16,10 +16,10 @@ function Alert(props) {
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
+        maxWidth: 475,
     },
     media: {
-        height: 140,
+        minHeight: 200,
     },
 });
 
@@ -120,7 +120,7 @@ export default function FCNewRecipe(props) {
     };
 
     let list = ingredients.map((ing, index) => (
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4} key={index}>
             <Card className={classes.root}>
                 <CardMedia
                     className={classes.media}
@@ -142,7 +142,7 @@ export default function FCNewRecipe(props) {
                         label="add Ingredient:"
                         labelPlacement="start"
                     />
-                    
+
 
                 </CardActions>
             </Card>
@@ -174,8 +174,14 @@ export default function FCNewRecipe(props) {
             </Grid>
 
             <Grid container
+                spacing={1}
+                justify="flex-start"
+                alignItems="center"
                 style={styleBtnContainer} >
-                {list}
+                {loading ?
+                    <h3>Loading Ingredients... please wait</h3>
+                    :
+                    list}
             </Grid>
 
             <Grid container

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApplication.DTO;
 
 namespace WebApplication.Controllers
 {
@@ -16,7 +17,21 @@ namespace WebApplication.Controllers
             try
             {
                 KitchenDbContext db = new KitchenDbContext();
-                tblIngredient[] ingredients = db.tblIngredients.ToArray();
+                List<IngredientDTO> ingredients = db.tblIngredients.Select(i => new IngredientDTO()
+                {
+                    ingredientsID = i.IngredientsID,
+                    name = i.name,
+                    image = i.image,
+                    calories = i.calories ?? 0,
+                    recipes = i.tblRecipes.Select(r => new RecipesOfIngredientDTO()
+                    {
+                        recipeID = r.RecipesID,
+                        name =r.name,
+                        cookingMethod =r.cookingMethod,
+                        cookingTime =r.time ?? 0,
+                        image =r.image,
+                    }).ToList()
+                }).ToList();
 
                 return Ok(ingredients);
             }
@@ -33,7 +48,24 @@ namespace WebApplication.Controllers
             try
             {
                 KitchenDbContext db = new KitchenDbContext();
-                tblIngredient[] ingredient = db.tblIngredients.Where(x => x.IngredientsID == id).ToArray();
+                List<IngredientDTO> ingredient = db.tblIngredients.Where(x => x.IngredientsID == id).Select(i => new IngredientDTO()
+                {
+                    ingredientsID = i.IngredientsID,
+                    name = i.name,
+                    image = i.image,
+                    calories = i.calories ?? 0,
+                    recipes = i.tblRecipes.Select(r => new RecipesOfIngredientDTO()
+                    {
+                        recipeID = r.RecipesID,
+                        name = r.name,
+                        cookingMethod = r.cookingMethod,
+                        cookingTime = r.time ?? 0,
+                        image = r.image,
+                    }).ToList()
+                }).ToList();
+
+                
+
                 return Ok(ingredient);
             }
             catch (Exception ex)

@@ -1,4 +1,4 @@
-import React, { useState  } from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { Button, TextField, Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -29,7 +29,6 @@ export default function FCNewIngredient(props) {
   const [imageUrl, setImageUrl] = useState("");
   const [calories, setCalories] = useState("");
 
-   
   const handleCreateNewIngredient = () => {
     const url = 'http://localhost:57403/api/Ingredients';
     let newIngredient =
@@ -44,19 +43,19 @@ export default function FCNewIngredient(props) {
       method: 'POST',
       body: JSON.stringify(newIngredient),
       headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Accept': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
       })
-  }).then(res => {
-    console.log(res);
+    }).then(res => {
+      console.log(res);
       return res.json()
-  }).then(
+    }).then(
       (result) => {
-          setIngredients(result);
-          setLoading(false);
+        setIngredients(result);
+        setLoading(false);
       },
       (error) => {
-          console.log("err post=", error);
+        console.log("err post=", error);
       });
     //turn on Snackbar alert
     setOpen(true);
@@ -64,7 +63,7 @@ export default function FCNewIngredient(props) {
   };
 
   const handleClearForm = () => {
-
+    
     //clear value of textfileds
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
@@ -107,7 +106,7 @@ export default function FCNewIngredient(props) {
   };
 
   return (
-    <div>
+    <div >
       <h1>Create new ingredient</h1>
       <Grid
         container
