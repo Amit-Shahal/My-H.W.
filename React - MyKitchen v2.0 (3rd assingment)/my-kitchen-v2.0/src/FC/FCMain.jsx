@@ -12,19 +12,13 @@ export default function FCMain() {
   const history = useHistory();
   const [value, setValue] = useState(0);
 
-  const [name, setName] = React.useState("");
-  const [imageUrl, setImageUrl] = React.useState("");
-  const [calories, setCalories] = React.useState("");
+ 
 
   useEffect(() => {
    history.push("/");
   }, []);
 
-  const getDataFromChild = (name, imageUrl, calories) => {
-    setName(name);
-    setImageUrl(imageUrl);
-    setCalories(calories);
-  }
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,11 +57,10 @@ export default function FCMain() {
        
       <Switch>
         <Route path="/" exact ><FCMyKitchen /></Route>
-        <Route path="/newIngredient" exact><FCNewIngredient sendData2Parent={getDataFromChild} /></Route>
+        <Route path="/newIngredient" exact><FCNewIngredient /></Route>
         <Route path="/newRecipe"exact ><FCNewRecipe /></Route>
       </Switch>
 
-      {name}{imageUrl}{calories}
     </div>
   );
 }

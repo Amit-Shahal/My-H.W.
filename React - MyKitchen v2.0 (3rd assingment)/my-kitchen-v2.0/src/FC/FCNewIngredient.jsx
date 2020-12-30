@@ -1,7 +1,6 @@
 import React, { useState  } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { Button, TextField, Snackbar } from '@material-ui/core';
-
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -32,11 +31,36 @@ export default function FCNewIngredient(props) {
 
    
   const handleCreateNewIngredient = () => {
+    const url = 'http://localhost:57403/api/Ingredients';
+    let newIngredient =
+    {
+      "tblRecipes": [],
+      "name": name,
+      "image": imageUrl,
+      "calories": calories,
+    };
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(newIngredient),
+      headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+      })
+  }).then(res => {
+    console.log(res);
+      return res.json()
+  }).then(
+      (result) => {
+          setIngredients(result);
+          setLoading(false);
+      },
+      (error) => {
+          console.log("err post=", error);
+      });
     //turn on Snackbar alert
     setOpen(true);
 
-    //uplifte
-    props.sendData2Parent(name, imageUrl, calories);
   };
 
   const handleClearForm = () => {
@@ -71,7 +95,7 @@ export default function FCNewIngredient(props) {
   const handleChangeCalories = (e) => {
     setCalories(e.target.value);
   };
-  const styleBtnContainerontainer = {
+  const styleBtnContainer = {
     paddingLeft: "10%", marginTop: "10px", paddingRight: "10%"
   };
 
@@ -104,7 +128,7 @@ export default function FCNewIngredient(props) {
       </Grid>
 
       <Grid container
-        style={styleBtnContainerontainer}
+        style={styleBtnContainer}
       >
         <Grid item xs={12} sm={6}>
           <Button
