@@ -46,24 +46,20 @@ export default function FCNewIngredient(props) {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
       })
-    }).then(res => {
-      console.log(res);
-      return res.json()
-    }).then(
-      (result) => {
-        setIngredients(result);
-        setLoading(false);
-      },
-      (error) => {
-        console.log("err post=", error);
-      });
-    //turn on Snackbar alert
-    setOpen(true);
+    });
+    setOpen(true);       //turn on Snackbar alert
+    //clear value of textfileds
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    setName("");
+    setImageUrl("");
+    setCalories("");
 
   };
 
   const handleClearForm = () => {
-    
+
     //clear value of textfileds
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
@@ -72,6 +68,7 @@ export default function FCNewIngredient(props) {
     setImageUrl("");
     setCalories("");
     //turns on Snackbar alert
+
     setCFOpen(true);
   };
 
@@ -83,15 +80,15 @@ export default function FCNewIngredient(props) {
     setCFOpen(false);
   };
 
-  const handleChangeName = (e) => {
+  const ChangeName = (e) => {
     setName(e.target.value);
 
   };
-  const handleChangeImageUrl = (e) => {
+  const ChangeImageUrl = (e) => {
     setImageUrl(e.target.value);
   };
 
-  const handleChangeCalories = (e) => {
+  const ChangeCalories = (e) => {
     setCalories(e.target.value);
   };
   const styleBtnContainer = {
@@ -115,14 +112,15 @@ export default function FCNewIngredient(props) {
         alignItems="stretch"
         style={styleTextFieldContainer}
       >
-        <TextField onChange={handleChangeName}
+        <TextField onChange={ChangeName}
           label="Name" variant="outlined" size="small" style={styleTextField} />
 
-        <TextField onChange={handleChangeImageUrl}
+        <TextField onChange={ChangeImageUrl}
           label="Image (url)" variant="outlined" size="small" style={styleTextField} />
 
-        <TextField onChange={handleChangeCalories}
-          label="Calories" variant="outlined" size="small" style={styleTextField} />
+        <TextField onChange={ChangeCalories}
+          label="Calories" variant="outlined" size="small" style={styleTextField}
+          type="number" />
 
       </Grid>
 

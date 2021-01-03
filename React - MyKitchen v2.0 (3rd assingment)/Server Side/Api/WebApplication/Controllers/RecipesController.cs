@@ -1,11 +1,13 @@
 ﻿using ClassLibrary.EF;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using WebApplication.DTO;
 
 
 namespace WebApplication.Controllers
@@ -18,8 +20,21 @@ namespace WebApplication.Controllers
             try
             {
                 KitchenDbContext db = new KitchenDbContext();
-                tblRecipe[] Recipes = db.tblRecipes.ToArray();
-                return Ok(Recipes);
+                List < RecipeDTO > recipes = db.tblRecipes.Select(r => new RecipeDTO() {
+                    recipeID = r.RecipesID,
+                    name = r.name,
+                    cookingMethod = r.cookingMethod,
+                    cookingTime = r.time ?? 0,
+                    image = r.image,
+                    ingredients = r.tblIngredients.Select(i => new IngredientDTO()
+                    {
+                        ingredientsID = i.IngredientsID,
+                        name = i.name,
+                        image = i.image,
+                        calories = i.calories ?? 0,
+                    }).ToList()
+                }).ToList();
+                return Ok(recipes);
             }
             catch (Exception ex)
             {
@@ -34,7 +49,21 @@ namespace WebApplication.Controllers
             try
             {
                 KitchenDbContext db = new KitchenDbContext();
-                tblRecipe[] Recipes = db.tblRecipes.Where(x => x.RecipesID == id).ToArray();
+                List<RecipeDTO> Recipes = db.tblRecipes.Where(x => x.RecipesID == id).Select(r => new RecipeDTO()
+                {
+                    recipeID = r.RecipesID,
+                    name = r.name,
+                    cookingMethod = r.cookingMethod,
+                    cookingTime = r.time ?? 0,
+                    image = r.image,
+                    ingredients = r.tblIngredients.Select(i => new IngredientDTO()
+                    {
+                        ingredientsID = i.IngredientsID,
+                        name = i.name,
+                        image = i.image,
+                        calories = i.calories ?? 0,
+                    }).ToList()
+                }).ToList();
                 return Ok(Recipes);
             }
             catch (Exception ex)
@@ -49,13 +78,40 @@ namespace WebApplication.Controllers
 
             try
             {
+                tblRecipe v = new tblRecipe();
+                v.name = value.name;
+                v.image = value.image;
+                v.time = value.time;
+                v.cookingMethod = value.cookingMethod;
+                foreach (tblIngredient i in value.tblIngredients)
+                {
+                    tblIngredient ingredient = new tblIngredient();
+                    ingredient.name = i.name;
+                    ingredient.image = i.image;
+                    ingredient.calories = i.calories;
+                    v.tblIngredients.Add(ingredient);
+                }
                 KitchenDbContext db = new KitchenDbContext();
-                db.tblRecipes.Add(value);
+                db.tblRecipes.Add(v);
                 db.SaveChanges();
                 //serch new Recipes index
                 db = new KitchenDbContext();
-                tblRecipe[] recipes = db.tblRecipes.Where(x => x.image == value.image).ToArray();
-                return Created(new Uri(Request.RequestUri.AbsoluteUri + recipes[0].RecipesID), recipes[0]);
+                RecipeDTO recipe = db.tblRecipes.Where(x => x.image == value.image).Select(r => new RecipeDTO()
+                {
+                    recipeID = r.RecipesID,
+                    name = r.name,
+                    cookingMethod = r.cookingMethod,
+                    cookingTime = r.time ?? 0,
+                    image = r.image,
+                    ingredients = r.tblIngredients.Select(i => new IngredientDTO()
+                    {
+                        ingredientsID = i.IngredientsID,
+                        name = i.name,
+                        image = i.image,
+                        calories = i.calories ?? 0,
+                    }).ToList()
+                }).FirstOrDefault();
+                return Created(new Uri(Request.RequestUri.AbsoluteUri + recipe.recipeID), recipe);
             }
             catch (Exception ex)
             {

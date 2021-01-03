@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
                     name = i.name,
                     image = i.image,
                     calories = i.calories ?? 0,
-                    recipes = i.tblRecipes.Select(r => new RecipesOfIngredientDTO()
+                    recipes = i.tblRecipes.Select(r => new RecipeDTO()
                     {
                         recipeID = r.RecipesID,
                         name =r.name,
@@ -54,7 +54,7 @@ namespace WebApplication.Controllers
                     name = i.name,
                     image = i.image,
                     calories = i.calories ?? 0,
-                    recipes = i.tblRecipes.Select(r => new RecipesOfIngredientDTO()
+                    recipes = i.tblRecipes.Select(r => new RecipeDTO()
                     {
                         recipeID = r.RecipesID,
                         name = r.name,
@@ -83,10 +83,25 @@ namespace WebApplication.Controllers
                 KitchenDbContext db = new KitchenDbContext();
                 db.tblIngredients.Add(value);
                 db.SaveChanges();
-                //serch new ingredient index
+     
+                //search new ingredient index
                 db = new KitchenDbContext();
-                tblIngredient[] ingredient = db.tblIngredients.Where(x => x.image == value.image).ToArray();
-                return Created(new Uri(Request.RequestUri.AbsoluteUri + ingredient[0].IngredientsID), ingredient[0]);
+                IngredientDTO ingredient = db.tblIngredients.Where(x => x.image == value.image).Select(i => new IngredientDTO()
+                {
+                    ingredientsID = i.IngredientsID,
+                    name = i.name,
+                    image = i.image,
+                    calories = i.calories ?? 0,
+                    recipes = i.tblRecipes.Select(r => new RecipeDTO()
+                    {
+                        recipeID = r.RecipesID,
+                        name = r.name,
+                        cookingMethod = r.cookingMethod,
+                        cookingTime = r.time ?? 0,
+                        image = r.image,
+                    }).ToList()
+                }).FirstOrDefault();
+                return Created(new Uri(Request.RequestUri.AbsoluteUri + ingredient.ingredientsID), ingredient);
             }
             catch (Exception ex)
             {

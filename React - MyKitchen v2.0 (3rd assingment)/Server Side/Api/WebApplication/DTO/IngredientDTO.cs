@@ -11,6 +11,6 @@ namespace WebApplication.DTO
         public string name;
         public string image;
         public int calories;
-        public List<RecipesOfIngredientDTO> recipes;
+        public List<RecipeDTO> recipes;
     }
 }

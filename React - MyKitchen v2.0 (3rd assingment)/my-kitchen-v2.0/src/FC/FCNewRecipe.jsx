@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { wait } from '@testing-library/react';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,6 +37,7 @@ export default function FCNewRecipe(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
     const [ingredients, setIngredients] = useState([]);
+    const [ingredientsInNewRecipe, setIngredientsInNewRecipe] = useState([]);
     const [open, setOpen] = useState(false);
     const [openCF, setCFOpen] = useState(false);
     const [name, setName] = useState("");
@@ -65,9 +67,15 @@ export default function FCNewRecipe(props) {
 
     }, []);
 
-    const handleCreateNewIngredient = () => {
+    const handleCreateNewRecipe = () => {
         //turn on Snackbar alert
         setOpen(true);
+        //new recipe here
+
+
+
+
+
 
     };
     const handleClearForm = () => {
@@ -85,6 +93,18 @@ export default function FCNewRecipe(props) {
         setCFOpen(true);
     };
 
+    const handleCheckbox = (ingredient, e, index) => {
+        let itemChecked = ingredientsInNewRecipe;
+        if (e.target.checked) {
+            itemChecked.push(ingredient);
+            setIngredientsInNewRecipe(itemChecked);
+        }
+        else {
+            let x = ingredientsInNewRecipe.filter((i) => i.ingredientsID !== ingredient.ingredientsID);
+            setIngredientsInNewRecipe(x);
+        }
+    };
+
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -93,18 +113,18 @@ export default function FCNewRecipe(props) {
         setCFOpen(false);
     };
 
-    const handleChangeName = (e) => {
+    const ChangeName = (e) => {
         setName(e.target.value);
 
     };
-    const handleChangeImageUrl = (e) => {
+    const ChangeImageUrl = (e) => {
         setImageUrl(e.target.value);
     };
 
-    const handleChangeCookingMethod = (e) => {
+    const ChangeCookingMethod = (e) => {
         setCookingMethod(e.target.value);
     };
-    const handleChangeCookingTime = (e) => {
+    const ChangeCookingTime = (e) => {
         setCookingTime(e.target.value);
     };
 
@@ -136,9 +156,15 @@ export default function FCNewRecipe(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
+
                     <FormControlLabel
-                        value="start"
-                        control={<Checkbox color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} />}
+
+
+                        value={ing.ingredientsID}
+                        onChange={(e) => handleCheckbox(ing, e, index)}
+                        control={<Checkbox color="primary"
+
+                            inputProps={{ 'aria-label': 'secondary checkbox' }} />}
                         label="add Ingredient:"
                         labelPlacement="start"
                     />
@@ -151,7 +177,6 @@ export default function FCNewRecipe(props) {
 
     return (
         <div>
-            {console.log(ingredients)}
             <h1>Create new Recipe</h1>
             <Grid
                 container
@@ -160,16 +185,20 @@ export default function FCNewRecipe(props) {
                 alignItems="stretch"
                 style={styleTextFieldContainer}
             >
-                <TextField onChange={handleChangeName}
-                    label="Name" variant="outlined" size="small" style={styleTextField} />
+                <TextField onChange={ChangeName}
+                    label="Name" variant="outlined" size="small"
+                    style={styleTextField} />
 
-                <TextField onChange={handleChangeCookingMethod}
-                    label="Cooking Method" variant="outlined" size="small" style={styleTextField} />
-                <TextField onChange={handleChangeCookingTime}
-                    label="Cooking Time" variant="outlined" size="small" style={styleTextField} />
+                <TextField onChange={ChangeCookingMethod}
+                    label="Cooking Method" variant="outlined" size="small"
+                    style={styleTextField} />
+                <TextField onChange={ChangeCookingTime}
+                    label="Cooking Time" variant="outlined" size="small"
+                    style={styleTextField} type="number" />
 
-                <TextField onChange={handleChangeImageUrl}
-                    label="Image (url)" variant="outlined" size="small" style={styleTextField} />
+                <TextField onChange={ChangeImageUrl}
+                    label="Image (url)" variant="outlined" size="small"
+                    style={styleTextField} />
 
             </Grid>
 
@@ -189,7 +218,7 @@ export default function FCNewRecipe(props) {
             >
                 <Grid item xs={12} sm={6}>
                     <Button
-                        onClick={handleCreateNewIngredient}
+                        onClick={handleCreateNewRecipe}
                         variant="contained" color="primary"
                         size="small" fullWidth={true} >
                         Create new recipe
