@@ -78,6 +78,7 @@ namespace WebApplication.Controllers
 
             try
             {
+                KitchenDbContext db = new KitchenDbContext();
                 tblRecipe v = new tblRecipe();
                 v.name = value.name;
                 v.image = value.image;
@@ -85,13 +86,10 @@ namespace WebApplication.Controllers
                 v.cookingMethod = value.cookingMethod;
                 foreach (tblIngredient i in value.tblIngredients)
                 {
-                    tblIngredient ingredient = new tblIngredient();
-                    ingredient.name = i.name;
-                    ingredient.image = i.image;
-                    ingredient.calories = i.calories;
-                    v.tblIngredients.Add(ingredient);
+                    v.tblIngredients.Add(db.tblIngredients.Where(x => x.IngredientsID == i.IngredientsID).FirstOrDefault());
                 }
-                KitchenDbContext db = new KitchenDbContext();
+               
+
                 db.tblRecipes.Add(v);
                 db.SaveChanges();
                 //serch new Recipes index

@@ -68,18 +68,34 @@ export default function FCNewRecipe(props) {
     }, []);
 
     const handleCreateNewRecipe = () => {
+
+        //new recipe here
+        const url = 'http://localhost:57403/api/recipes';
+        console.log(ingredientsInNewRecipe);
+        let newRecipe =
+        {
+            "name": name,
+            "image": imageUrl,
+            "cookingMethod": cookingMethod,
+            "time": CookingTime,
+            "tblIngredients": ingredientsInNewRecipe
+        }
+       
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(newRecipe),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
+        });
+
         //turn on Snackbar alert
         setOpen(true);
-        //new recipe here
-
-
-
-
-
-
     };
-    const handleClearForm = () => {
 
+    const handleClearForm = () => {
+        console.log(ingredientsInNewRecipe);
         //clear value of textfileds
         Array.from(document.querySelectorAll("input")).forEach(
             input => (input.value = "")
@@ -93,10 +109,10 @@ export default function FCNewRecipe(props) {
         setCFOpen(true);
     };
 
-    const handleCheckbox = (ingredient, e, index) => {
+    const handleCheckbox = (ingredient, e) => {
         let itemChecked = ingredientsInNewRecipe;
         if (e.target.checked) {
-            itemChecked.push(ingredient);
+            itemChecked.push({"ingredientsID":ingredient.ingredientsID} );
             setIngredientsInNewRecipe(itemChecked);
         }
         else {
@@ -161,7 +177,7 @@ export default function FCNewRecipe(props) {
 
 
                         value={ing.ingredientsID}
-                        onChange={(e) => handleCheckbox(ing, e, index)}
+                        onChange={(e) => handleCheckbox(ing, e)}
                         control={<Checkbox color="primary"
 
                             inputProps={{ 'aria-label': 'secondary checkbox' }} />}
