@@ -49,8 +49,8 @@ export default function FCMain() {
           centered
         >
           <Tab label="My Kitchen"/>
-          <Tab label="Create new ingredient" />
-          <Tab label="Create new recipe" />
+          <Tab label="new ingredient" />
+          <Tab label="new recipe" />
         </Tabs>
       </Paper>
        

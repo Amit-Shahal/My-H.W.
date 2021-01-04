@@ -9,15 +9,15 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { wait } from '@testing-library/react';
-
+import {  useHistory } from "react-router-dom";
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 475,
+        // maxWidth: 475,
+        width:250,
     },
     media: {
         minHeight: 200,
@@ -44,7 +44,7 @@ export default function FCNewRecipe(props) {
     const [cookingMethod, setCookingMethod] = useState("");
     const [CookingTime, setCookingTime] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-
+    const history = useHistory();
 
     useEffect(() => {
         const url = 'http://localhost:57403/api/Ingredients';
@@ -71,7 +71,6 @@ export default function FCNewRecipe(props) {
 
         //new recipe here
         const url = 'http://localhost:57403/api/recipes';
-        console.log(ingredientsInNewRecipe);
         let newRecipe =
         {
             "name": name,
@@ -95,11 +94,16 @@ export default function FCNewRecipe(props) {
     };
 
     const handleClearForm = () => {
-        console.log(ingredientsInNewRecipe);
         //clear value of textfileds
         Array.from(document.querySelectorAll("input")).forEach(
-            input => (input.value = "")
+            input => (
+                input.value = ""
+                
+            )
+
         );
+        
+        
         setName("");
         setCookingMethod("");
         setCookingTime("");
@@ -108,6 +112,8 @@ export default function FCNewRecipe(props) {
         //turns on Snackbar alert
         setCFOpen(true);
     };
+
+   
 
     const handleCheckbox = (ingredient, e) => {
         let itemChecked = ingredientsInNewRecipe;
@@ -178,8 +184,9 @@ export default function FCNewRecipe(props) {
 
                         value={ing.ingredientsID}
                         onChange={(e) => handleCheckbox(ing, e)}
+                        className="chk"
+                        
                         control={<Checkbox color="primary"
-
                             inputProps={{ 'aria-label': 'secondary checkbox' }} />}
                         label="add Ingredient:"
                         labelPlacement="start"
