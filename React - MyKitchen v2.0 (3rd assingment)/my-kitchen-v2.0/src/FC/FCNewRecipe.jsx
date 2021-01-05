@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import Grid from '@material-ui/core/Grid';
 import { Button, TextField, Snackbar, Checkbox } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -9,7 +10,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {  useHistory } from "react-router-dom";
+
+
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -17,7 +19,7 @@ function Alert(props) {
 const useStyles = makeStyles({
     root: {
         // maxWidth: 475,
-        width:250,
+        width: 250,
     },
     media: {
         minHeight: 200,
@@ -44,7 +46,7 @@ export default function FCNewRecipe(props) {
     const [cookingMethod, setCookingMethod] = useState("");
     const [CookingTime, setCookingTime] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    const history = useHistory();
+    
 
     useEffect(() => {
         const url = 'http://localhost:57403/api/Ingredients';
@@ -79,7 +81,7 @@ export default function FCNewRecipe(props) {
             "time": CookingTime,
             "tblIngredients": ingredientsInNewRecipe
         }
-       
+
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(newRecipe),
@@ -94,31 +96,17 @@ export default function FCNewRecipe(props) {
     };
 
     const handleClearForm = () => {
-        //clear value of textfileds
-        Array.from(document.querySelectorAll("input")).forEach(
-            input => (
-                input.value = ""
-                
-            )
-
-        );
-        
-        
-        setName("");
-        setCookingMethod("");
-        setCookingTime("");
-        setImageUrl("");
-
-        //turns on Snackbar alert
+        window.location.reload(false);
         setCFOpen(true);
     };
 
-   
+
 
     const handleCheckbox = (ingredient, e) => {
+        let checked = e.target.checked;
         let itemChecked = ingredientsInNewRecipe;
-        if (e.target.checked) {
-            itemChecked.push({"ingredientsID":ingredient.ingredientsID} );
+        if (checked) {
+            itemChecked.push({ "ingredientsID": ingredient.ingredientsID });
             setIngredientsInNewRecipe(itemChecked);
         }
         else {
@@ -151,6 +139,7 @@ export default function FCNewRecipe(props) {
     };
 
 
+
     const styleTextField = {
         marginTop: "10px"
     };
@@ -161,8 +150,10 @@ export default function FCNewRecipe(props) {
         paddingLeft: "10%", marginTop: "10px", paddingRight: "10%"
     };
 
+
+
     let list = ingredients.map((ing, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index}>
+        <Grid item align="center" xs={12} sm={6} md={4} key={index}  >
             <Card className={classes.root}>
                 <CardMedia
                     className={classes.media}
@@ -178,21 +169,15 @@ export default function FCNewRecipe(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-
                     <FormControlLabel
-
-
-                        value={ing.ingredientsID}
                         onChange={(e) => handleCheckbox(ing, e)}
                         className="chk"
-                        
                         control={<Checkbox color="primary"
+                            key={index}
                             inputProps={{ 'aria-label': 'secondary checkbox' }} />}
                         label="add Ingredient:"
                         labelPlacement="start"
                     />
-
-
                 </CardActions>
             </Card>
         </Grid>
@@ -227,7 +212,7 @@ export default function FCNewRecipe(props) {
 
             <Grid container
                 spacing={1}
-                justify="flex-start"
+                justify="space-evenly"
                 alignItems="center"
                 style={styleBtnContainer} >
                 {loading ?
@@ -251,7 +236,8 @@ export default function FCNewRecipe(props) {
                     < Button
                         onClick={handleClearForm}
                         variant="contained" color="secondary"
-                        size="small" fullWidth={true}>
+                        size="small" fullWidth={true}
+                        type="submit">
                         Clear form
                      </Button>
                 </Grid>

@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import FCNewIngredient from "./FCNewIngredient";
 import FCNewRecipe from "./FCNewRecipe";
@@ -10,15 +10,15 @@ import FCMyKitchen from "./FCMyKitchen";
 export default function FCMain() {
 
   const history = useHistory();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(2);
 
- 
+
 
   useEffect(() => {
-   history.push("/");
+    history.push("/newRecipe");
   }, []);
 
-  
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -48,17 +48,17 @@ export default function FCMain() {
           textColor="primary"
           centered
         >
-          <Tab label="My Kitchen"/>
+          <Tab label="My Kitchen" />
           <Tab label="new ingredient" />
           <Tab label="new recipe" />
         </Tabs>
       </Paper>
-       
-       
+
+
       <Switch>
         <Route path="/" exact ><FCMyKitchen /></Route>
         <Route path="/newIngredient" exact><FCNewIngredient /></Route>
-        <Route path="/newRecipe"exact ><FCNewRecipe /></Route>
+        <Route path="/newRecipe" exact ><FCNewRecipe /></Route>
       </Switch>
 
     </div>

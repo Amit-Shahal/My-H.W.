@@ -84,7 +84,7 @@ namespace WebApplication.Controllers
                 db.tblIngredients.Add(value);
                 db.SaveChanges();
      
-                //search new ingredient index
+                //search new ingredient id
                 db = new KitchenDbContext();
                 IngredientDTO ingredient = db.tblIngredients.Where(x => x.image == value.image).Select(i => new IngredientDTO()
                 {

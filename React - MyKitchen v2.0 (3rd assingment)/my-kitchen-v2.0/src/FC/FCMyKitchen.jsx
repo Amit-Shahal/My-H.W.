@@ -63,7 +63,7 @@ export default function FCMyKitchen() {
     const showIngredients = (ingredients) => {
         setOpen(true);
         let IngredientsCard = ingredients.map((ing, index) => (
-            <Grid item xs={12} sm={6}  key={index}>
+            <Grid item align="center" xs={12} sm={6}  key={index}>
                 <Card className={classes.card}>
                     <CardMedia
                         className={classes.media}
@@ -85,7 +85,7 @@ export default function FCMyKitchen() {
     }
 
     let list = recipes.map((r, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index}>
+        <Grid item align="center" xs={12} sm={6} md={4} key={index}>
             <Card className={classes.root}>
                 <CardMedia
                     className={classes.media}
@@ -120,8 +120,7 @@ export default function FCMyKitchen() {
             <h1>Recipes</h1>
             <Grid container
                 spacing={1}
-                justify="flex-start"
-                alignItems="center"
+                justify="center"
                 style={styleBtnContainer} >
                 {loading ?
                     <h3>Loading Recipes... please wait</h3>
