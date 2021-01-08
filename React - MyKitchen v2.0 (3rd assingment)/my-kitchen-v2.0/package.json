@@ -20,6 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "http://proj.ruppin.ac.il/bgroup18/test1/build",
   "eslintConfig": {
     "extends": [
       "react-app",

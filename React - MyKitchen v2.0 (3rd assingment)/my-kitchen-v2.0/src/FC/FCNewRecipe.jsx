@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import Grid from '@material-ui/core/Grid';
 import { Button, TextField, Snackbar, Checkbox } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -46,7 +45,7 @@ export default function FCNewRecipe(props) {
     const [cookingMethod, setCookingMethod] = useState("");
     const [CookingTime, setCookingTime] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    
+
 
     useEffect(() => {
         const url = 'http://localhost:57403/api/Ingredients';
@@ -90,7 +89,7 @@ export default function FCNewRecipe(props) {
                 'Accept': 'application/json; charset=UTF-8',
             })
         });
-
+        window.location.reload(false);
         //turn on Snackbar alert
         setOpen(true);
     };
@@ -103,8 +102,9 @@ export default function FCNewRecipe(props) {
 
 
     const handleCheckbox = (ingredient, e) => {
-        let checked = e.target.checked;
         let itemChecked = ingredientsInNewRecipe;
+        let checked  =e.target.checked;
+
         if (checked) {
             itemChecked.push({ "ingredientsID": ingredient.ingredientsID });
             setIngredientsInNewRecipe(itemChecked);
@@ -138,6 +138,8 @@ export default function FCNewRecipe(props) {
         setCookingTime(e.target.value);
     };
 
+    
+
 
 
     const styleTextField = {
@@ -153,7 +155,7 @@ export default function FCNewRecipe(props) {
 
 
     let list = ingredients.map((ing, index) => (
-        <Grid item align="center" xs={12} sm={6} md={4} key={index}  >
+        <Grid item align="center" xs={12} sm={6} md={4} key={index}>
             <Card className={classes.root}>
                 <CardMedia
                     className={classes.media}
@@ -171,7 +173,6 @@ export default function FCNewRecipe(props) {
                 <CardActions>
                     <FormControlLabel
                         onChange={(e) => handleCheckbox(ing, e)}
-                        className="chk"
                         control={<Checkbox color="primary"
                             key={index}
                             inputProps={{ 'aria-label': 'secondary checkbox' }} />}
@@ -237,6 +238,7 @@ export default function FCNewRecipe(props) {
                         onClick={handleClearForm}
                         variant="contained" color="secondary"
                         size="small" fullWidth={true}
+                        name="clearForm"
                         type="submit">
                         Clear form
                      </Button>
