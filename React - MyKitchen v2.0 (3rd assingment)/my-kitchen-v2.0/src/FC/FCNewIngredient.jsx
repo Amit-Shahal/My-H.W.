@@ -47,6 +47,7 @@ export default function FCNewIngredient(props) {
         'Accept': 'application/json; charset=UTF-8',
       })
     });
+    
     setOpen(true);       //turn on Snackbar alert
     //clear value of textfileds
     Array.from(document.querySelectorAll("input")).forEach(

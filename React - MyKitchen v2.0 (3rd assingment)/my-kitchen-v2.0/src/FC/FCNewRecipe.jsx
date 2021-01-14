@@ -89,13 +89,13 @@ export default function FCNewRecipe(props) {
                 'Accept': 'application/json; charset=UTF-8',
             })
         });
-        window.location.reload(false);
+        window.location.reload();
         //turn on Snackbar alert
         setOpen(true);
     };
 
     const handleClearForm = () => {
-        window.location.reload(false);
+        window.location.reload();
         setCFOpen(true);
     };
 
