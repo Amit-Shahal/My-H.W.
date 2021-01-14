@@ -30,7 +30,7 @@ export default function FCNewIngredient(props) {
   const [calories, setCalories] = useState("");
 
   const handleCreateNewIngredient = () => {
-    const url = 'http://localhost:57403/api/Ingredients';
+    const url = 'http://proj.ruppin.ac.il/bgroup18/test2/MyKitchenPublish/api/Ingredients';
     let newIngredient =
     {
       "tblRecipes": [],

@@ -48,7 +48,7 @@ export default function FCNewRecipe(props) {
 
 
     useEffect(() => {
-        const url = 'http://localhost:57403/api/Ingredients';
+        const url = 'http://proj.ruppin.ac.il/bgroup18/test2/MyKitchenPublish/api/Ingredients';
         fetch(url, {
             method: 'GET',
             headers: new Headers({
@@ -71,7 +71,7 @@ export default function FCNewRecipe(props) {
     const handleCreateNewRecipe = () => {
 
         //new recipe here
-        const url = 'http://localhost:57403/api/recipes';
+        const url = 'http://proj.ruppin.ac.il/bgroup18/test2/MyKitchenPublish/api/recipes';
         let newRecipe =
         {
             "name": name,

@@ -37,7 +37,7 @@ export default function FCMyKitchen() {
     const [ingredientsInRecipe, setIngredientsInRecipe] = useState();
     const classes = useStyles();
     useEffect(() => {
-        const url = 'http://localhost:57403/api/recipes';
+        const url = 'http://proj.ruppin.ac.il/bgroup18/test2/MyKitchenPublish/api/recipes';
         fetch(url, {
             method: 'GET',
             headers: new Headers({

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tblIngredients">
+    <Key>
+      <PropertyRef Name="IngredientsID" />
+    </Key>
+    <Property Name="IngredientsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="image" Type="varchar" MaxLength="8000" />
+    <Property Name="calories" Type="int" />
+  </EntityType>
+  <EntityType Name="tblIngredientsInRecipes">
+    <Key>
+      <PropertyRef Name="RecipesID" />
+      <PropertyRef Name="IngredientsID" />
+    </Key>
+    <Property Name="RecipesID" Type="int" Nullable="false" />
+    <Property Name="IngredientsID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblRecipes">
+    <Key>
+      <PropertyRef Name="RecipesID" />
+    </Key>
+    <Property Name="RecipesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="image" Type="varchar" MaxLength="8000" />
+    <Property Name="cookingMethod" Type="varchar" MaxLength="255" />
+    <Property Name="time" Type="int" />
+  </EntityType>
+  <Association Name="FK__tblIngred__Ingre__2A4B4B5E">
+    <End Role="tblIngredients" Type="Self.tblIngredients" Multiplicity="1" />
+    <End Role="tblIngredientsInRecipes" Type="Self.tblIngredientsInRecipes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblIngredients">
+        <PropertyRef Name="IngredientsID" />
+      </Principal>
+      <Dependent Role="tblIngredientsInRecipes">
+        <PropertyRef Name="IngredientsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblIngred__Recip__29572725">
+    <End Role="tblRecipes" Type="Self.tblRecipes" Multiplicity="1" />
+    <End Role="tblIngredientsInRecipes" Type="Self.tblIngredientsInRecipes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRecipes">
+        <PropertyRef Name="RecipesID" />
+      </Principal>
+      <Dependent Role="tblIngredientsInRecipes">
+        <PropertyRef Name="RecipesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblIngredients" EntityType="Self.tblIngredients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblIngredientsInRecipes" EntityType="Self.tblIngredientsInRecipes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRecipes" EntityType="Self.tblRecipes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__tblIngred__Ingre__2A4B4B5E" Association="Self.FK__tblIngred__Ingre__2A4B4B5E">
+      <End Role="tblIngredients" EntitySet="tblIngredients" />
+      <End Role="tblIngredientsInRecipes" EntitySet="tblIngredientsInRecipes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblIngred__Recip__29572725" Association="Self.FK__tblIngred__Recip__29572725">
+      <End Role="tblRecipes" EntitySet="tblRecipes" />
+      <End Role="tblIngredientsInRecipes" EntitySet="tblIngredientsInRecipes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
