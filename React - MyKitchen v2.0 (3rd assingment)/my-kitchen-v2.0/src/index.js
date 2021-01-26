@@ -3,12 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {  BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route ,Switch } from 'react-router-dom';
+import FCNewIngredient from "./FC/FCNewIngredient";
+import FCNewRecipe from "./FC/FCNewRecipe";
+import FCMyKitchen from "./FC/FCMyKitchen";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-    <App />
+      {/* <App /> */}
+      <Route component={App} />
+      <Switch>
+        <Route path="/" exact ><FCMyKitchen /></Route>
+        <Route path="/newIngredient" exact><FCNewIngredient /></Route>
+        <Route path="/newRecipe" exact ><FCNewRecipe /></Route>
+      </Switch>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

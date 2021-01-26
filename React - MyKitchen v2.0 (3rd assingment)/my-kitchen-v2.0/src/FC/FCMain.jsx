@@ -55,11 +55,11 @@ export default function FCMain() {
       </Paper>
 
 
-      <Switch>
+      {/* <Switch>
         <Route path="/" exact ><FCMyKitchen /></Route>
         <Route path="/newIngredient" exact><FCNewIngredient /></Route>
         <Route path="/newRecipe" exact ><FCNewRecipe /></Route>
-      </Switch>
+      </Switch> */}
 
     </div>
   );

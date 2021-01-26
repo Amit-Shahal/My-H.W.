@@ -186,7 +186,7 @@ export default function FCNewRecipe(props) {
 
     return (
         <div>
-            <h1>Create new Recipe</h1>
+            <h1 style= {{alignItems: "center"}}>Create new Recipe</h1>
             <Grid
                 container
                 direction="column"
