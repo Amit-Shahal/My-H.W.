@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
-import FCNewIngredient from "./FCNewIngredient";
-import FCNewRecipe from "./FCNewRecipe";
+import { useHistory } from "react-router-dom";
+
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import FCMyKitchen from "./FCMyKitchen";
 
 export default function FCMain() {
 
